@@ -12,12 +12,6 @@
 #define GPIO_DELAY     100000
 #define GPIO_CHANNEL 1
 
-
-// where the FUCK is this supposed to come from exactly
-void outbyte(char c) {
-	 XUartPs_SendByte(STDOUT_BASEADDRESS, c);
-}
-
 XGpio Gpio;
 
 int main()

@@ -4,7 +4,6 @@ MEMORY
 {
   SRAM_0 : ORIGIN = 0x00000000, LENGTH = 0x00030000  /* 192k */
   SRAM_1 : ORIGIN = 0xFFFF0000, LENGTH = 0x00010000  /*  64k */
-  DDR_PS : ORIGIN = 0x00100000, LENGTH = 0x1FF00000  /* 512M */
 }
 
 EXTERN(__stack_size)
@@ -79,8 +78,4 @@ SECTIONS
     . += __stack_size;
   } >SRAM_1 =0xFEEDBEEF
 
-  .data.ddr :
-  {
-    *(.data_in_ddr)
-  } >DDR_PS
 }

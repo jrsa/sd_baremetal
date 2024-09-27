@@ -49,6 +49,7 @@ $(TARGET): $(OBJECTS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
+# LARGE CAVEAT: this does not clean any of the xilinx stuff i think
 clean:
 	rm -f $(TARGET) $(OBJECTS)
 
@@ -59,7 +60,7 @@ debug: $(TARGET)
 	$(GDB)  -iex "target remote localhost:3333" \
 	        -iex "monitor halt" \
 		-ex "load" \
-		-ex "continue" "$(TARGET)"
+		"$(TARGET)"
 
 run: $(TARGET)
 	$(GDB)  -iex "target remote localhost:3333" \
