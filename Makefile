@@ -1,12 +1,23 @@
 
-#BSPDIR = ../../bsp
-BSPDIR = .
-XIL = xil
+XIL_INC = -I embeddedsw/lib/bsp/standalone/src/common/ \
+      -I embeddedsw/lib/bsp/standalone/src/arm/cortexa9/ \
+	  -I embeddedsw/lib/bsp/standalone/src/common/ \
+	  -I embeddedsw/lib/bsp/standalone/src/arm/common/gcc/ \
+	  -I embeddedsw/XilinxProcessorIPLib/drivers/gpio/src/ \
+	  -I embeddedsw/XilinxProcessorIPLib/drivers/uartps/src/ 
+	
 
 TARGET = main.elf
-SOURCES = main.c
-
-#include $(BSPDIR)/Makefile.inc
+SOURCES = main.c \
+	embeddedsw/lib/bsp/standalone/src/common/xil_printf.c \
+	embeddedsw/XilinxProcessorIPLib/drivers/uartps/src/xuartps_hw.c \
+	embeddedsw/XilinxProcessorIPLib/drivers/gpio/src/xgpio.c \
+	embeddedsw/XilinxProcessorIPLib/drivers/gpio/src/xgpio_sinit.c \
+	embeddedsw/XilinxProcessorIPLib/drivers/gpio/src/xgpio_extra.c \
+	embeddedsw/XilinxProcessorIPLib/drivers/gpio/src/xgpio_g.c \
+	embeddedsw/lib/bsp/standalone/src/common/xil_assert.c \
+	platform.c
+	
 
 CROSS_COMPILE ?= arm-none-eabi-
 
@@ -17,12 +28,12 @@ SZ      = $(CROSS_COMPILE)size
 GDB     = $(CROSS_COMPILE)gdb
 OOCD    = openocd
 
-CFLAGS  = -I$(XIL) -I$(BSPDIR) -mcpu=cortex-a9 -O0 -g3 #-Wall -Werror -Wpedantic
-LDFLAGS = -T$(BSPDIR)/Zynq.ld -lc -lnosys -lg -lm
+CFLAGS  = $(XIL_INC) -I. -mcpu=cortex-a9 -O0 -g3 #-Wall -Werror -Wpedantic
+LDFLAGS = -TZynq.ld -lc -lnosys -lg -lm
 ASFLAGS = -g -mcpu=cortex-a9
 
-BSP     = $(BSPDIR)/boot.S \
-          $(BSPDIR)/ps7_init.c
+BSP     = boot.S \
+          ps7_init.c
 
 OBJECTS = $(patsubst %.S,%.o,$(patsubst %.c,%.o,$(SOURCES) $(BSP)))
 

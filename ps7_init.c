@@ -12475,6 +12475,7 @@ ps7_init()
   ret = ps7_config (ps7_clock_init_data);
   if (ret != PS7_INIT_SUCCESS) return ret;
 
+#if 0 // hmmmmm
   // DDR init
   ret = ps7_config (ps7_ddr_init_data);
   if (ret != PS7_INIT_SUCCESS) return ret;
@@ -12485,6 +12486,7 @@ ps7_init()
   ret = ps7_config (ps7_peripherals_init_data);
   if (ret != PS7_INIT_SUCCESS) return ret;
   //xil_printf ("\n PCW Silicon Version : %d.0", pcw_ver);
+#endif
   return PS7_INIT_SUCCESS;
 }
 
